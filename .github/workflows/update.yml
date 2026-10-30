@@ -1,0 +1,95 @@
+name: Update NerChat
+
+on:
+  schedule:
+    # 03:17 Asia/Shanghai, once daily. GitHub schedules can be delayed.
+    - cron: '17 19 * * *'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Redeploy the current stable release even if unchanged
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+    paths-ignore: [deployed-release.json, README.md]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: nerchat-production
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Check stable release
+        id: check
+        env:
+          FORCE: ${{ inputs.force }}
+        run: |
+          python3 - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+          release = json.loads(subprocess.check_output(['gh', 'api', 'repos/element-hq/element-web/releases/latest']))
+          assert not release['draft'] and not release['prerelease']
+          state = json.loads(Path('deployed-release.json').read_text()) if Path('deployed-release.json').exists() else {}
+          changed = release['tag_name'] != state.get('tag') or os.environ.get('FORCE') == 'true' or os.environ['GITHUB_EVENT_NAME'] == 'push'
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write('changed=' + str(changed).lower() + '\n')
+          print('Latest stable release:', release['tag_name'], '; deployment required:', changed)
+          PY
+      - if: steps.check.outputs.changed == 'true'
+        run: npm ci --ignore-scripts
+      - name: Prepare and verify artifact
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          python3 scripts/prepare.py
+          python3 scripts/verify.py
+          node --test tests/routing.test.mjs
+          ./node_modules/.bin/edgeone validate
+      - name: Deploy preview
+        if: steps.check.outputs.changed == 'true'
+        env:
+          EDGEONE_API_TOKEN: ${{ secrets.EDGEONE_API_TOKEN }}
+        run: node scripts/deploy.mjs preview
+      - name: Verify preview HTTP behavior
+        if: steps.check.outputs.changed == 'true'
+        run: python3 scripts/verify-deployment.py preview
+      - name: Deploy production
+        if: steps.check.outputs.changed == 'true'
+        env:
+          EDGEONE_API_TOKEN: ${{ secrets.EDGEONE_API_TOKEN }}
+        run: node scripts/deploy.mjs production
+      - name: Verify production HTTP behavior
+        if: steps.check.outputs.changed == 'true'
+        run: python3 scripts/verify-deployment.py production
+      - name: Record successful deployment
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          cp .work/release.json deployed-release.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add deployed-release.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: record successfully deployed Element release"
+            git push
+          fi
+      - name: Report failure or resolve previous incident
+        if: always()
+        env:
+          JOB_STATUS: ${{ job.status }}
+          DEPLOYED: ${{ steps.check.outputs.changed }}
+          GH_REPO: ${{ github.repository }}
+        run: python3 scripts/report.py

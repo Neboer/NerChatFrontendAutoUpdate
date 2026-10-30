@@ -1,0 +1,14 @@
+{
+  "name": "nerchat-frontend-auto-update",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "prepare-site": "python3 scripts/prepare.py",
+    "verify": "python3 scripts/verify.py"
+  },
+  "devDependencies": {
+    "edgeone": "1.6.47",
+    "@edgeone/makers-sdk": "0.1.0"
+  }
+}

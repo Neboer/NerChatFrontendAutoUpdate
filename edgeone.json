@@ -1,0 +1,253 @@
+{
+  "headers": [
+    {
+      "source": "/*",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors 'self'"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
+    },
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/index.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/config.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/config.*.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/i18n",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/i18n/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/version",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/manifest.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/mobile_guide/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/nerchat-release.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/.well-known/*",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "X-Requested-With, Content-Type, Authorization, Date, If-Match, If-None-Match"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, HEAD, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Expose-Headers",
+          "value": "ETag, Location, X-Max-Bytes"
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/json; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/_matrix/client/versions",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "X-Requested-With, Content-Type, Authorization, Date, If-Match, If-None-Match"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, HEAD, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Expose-Headers",
+          "value": "ETag, Location, X-Max-Bytes"
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/json; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/*.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/sw.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ],
+  "caches": [
+    {
+      "source": "/",
+      "cacheTtl": 0
+    },
+    {
+      "source": "/index.html",
+      "cacheTtl": 0
+    },
+    {
+      "source": "/config.json",
+      "cacheTtl": 0
+    },
+    {
+      "source": "/config.*.json",
+      "cacheTtl": 0
+    },
+    {
+      "source": "/i18n",
+      "cacheTtl": 0
+    },
+    {
+      "source": "/i18n/*",
+      "cacheTtl": 0
+    },
+    {
+      "source": "/version",
+      "cacheTtl": 0
+    },
+    {
+      "source": "/manifest.json",
+      "cacheTtl": 0
+    },
+    {
+      "source": "/mobile_guide/*",
+      "cacheTtl": 0
+    },
+    {
+      "source": "/nerchat-release.json",
+      "cacheTtl": 0
+    },
+    {
+      "source": "/.well-known/*",
+      "cacheTtl": 0
+    },
+    {
+      "source": "/_matrix/*",
+      "cacheTtl": 0
+    },
+    {
+      "source": "/_synapse/*",
+      "cacheTtl": 0
+    },
+    {
+      "source": "/*.html",
+      "cacheTtl": 0
+    },
+    {
+      "source": "/sw.js",
+      "cacheTtl": 0
+    }
+  ]
+}

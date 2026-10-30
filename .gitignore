@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.work/
+.env
+.env.*
+.edgeone/
+.tef_dist/
+.DS_Store
+__pycache__/
