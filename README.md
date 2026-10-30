@@ -32,7 +32,8 @@ GitHub Actions 每天北京时间 **03:17** 检查 `/releases/latest`；GitHub �
 - Project ID：`makers-kjd68tcyocsk`
 - 区域：`mainland`（由 SDK 显式创建，CLI 的区域默认日志不会改变现有项目区域）
 - [腾讯云项目控制台](https://console.cloud.tencent.com/edgeone/pages/project/makers-kjd68tcyocsk)
-- 自定义域名：`chat.neboer.site`。大陆节点要求域名已备案；归属验证、CNAME 和免费证书状态在控制台确认。
+- 自定义域名：`chat.neboer.site`。大陆节点，域名归属已验证；CNAME 目标为 `chat.neboer.site.pages.dnsoe4.com`。
+- HTTPS 使用上传的通配符证书 `neboer.site-26.09`（腾讯云证书 ID `byfH3TDS`），覆盖 `neboer.site` 和 `*.neboer.site`，有效期至北京时间 2026-12-09 05:38:48。证书及私钥不存入仓库；按要求不配置证书自动续期。
 - 平台默认域名用于临时验收，可能有访问验证和有效期限制，正式入口使用自定义域名。
 
 `EDGEONE_API_TOKEN` 已作为 GitHub Actions Secret 配置，不能提交到仓库。它由腾讯云 CLI 登录生成，具有账号级部署权限；定期在控制台审查并轮换。CI 固定 EdgeOne CLI 版本并提交 npm lockfile，GitHub Actions 固定到提交 SHA。
