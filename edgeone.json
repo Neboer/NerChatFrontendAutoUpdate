@@ -131,10 +131,6 @@
           "value": "ETag, Location, X-Max-Bytes"
         },
         {
-          "key": "Content-Type",
-          "value": "application/json; charset=utf-8"
-        },
-        {
           "key": "Cache-Control",
           "value": "no-cache, max-age=0, must-revalidate"
         }
@@ -184,6 +180,24 @@
         {
           "key": "Cache-Control",
           "value": "no-cache, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/.well-known/matrix/client",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/.well-known/matrix/server",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json; charset=utf-8"
         }
       ]
     }
